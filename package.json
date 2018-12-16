@@ -1,0 +1,37 @@
+{
+  "name": "wasync",
+  "version": "0.1.0",
+  "description": "Async utils and patterns for JavaScript",
+  "main": "dist/wasync.js",
+  "scripts": {
+    "build": "webpack --env dev && webpack --env build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:WithIO/wasync.git"
+  },
+  "author": "Rémy Sanchez <remy.sanchez@with-madrid.com>",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/WithIO/wasync/issues"
+  },
+  "homepage": "https://github.com/WithIO/wasync",
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.51",
+    "@babel/core": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
+    "babel-eslint": "^8.0.3",
+    "babel-loader": "^8.0.0-beta.4",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-env": "^7.0.0-beta.3",
+    "babel-register": "^7.0.0-beta.3",
+    "eslint": "^5.10.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "webpack": "^4.12.2",
+    "webpack-cli": "^3.0.8",
+    "yargs": "^10.0.3"
+  }
+}
