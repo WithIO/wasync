@@ -21,7 +21,6 @@ const config = {
     mode: mode,
     entry: {
         wasync: path.join(__dirname, '/src/index.js'),
-        debounce: path.join(__dirname, '/src/debounce.js'),
     },
     devtool: 'source-map',
     output: {
