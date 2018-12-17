@@ -5,13 +5,27 @@
         </div>
 
         <ul>
+            <li><label>
+                <input type="checkbox" v-model="returnError">
+                Return error
+            </label></li>
             <li>Search = {{ search }}</li>
             <li>Result = {{ result }}</li>
             <li>Loading = {{ loading }}</li>
             <li>
                 Call list
                 <ul>
-                    <li v-for="call of callList" :key="call">{{ call }}</li>
+                    <li v-for="(call, idx) of callList" :key="idx">
+                        {{ call }}
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Error list
+                <ul>
+                    <li v-for="error of errorList" :key="error">
+                        {{ error }}
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -34,6 +48,8 @@ export default {
             result: '',
             loading: false,
             callList: [],
+            errorList: [],
+            returnError: false,
         };
     },
 
@@ -46,11 +62,19 @@ export default {
                 this.loading = true;
             },
             run({search}) {
-                this.callList.unshift({search});
+                if (this.returnError) {
+                    throw new Error(`Error on "${search}"`);
+                } else {
+                    this.callList.unshift({search});
+                }
+
                 return doTheSearch({search});
             },
             success(result) {
                 this.result = result;
+            },
+            failure(error) {
+                this.errorList.unshift(error.message);
             },
             cleanup() {
                 this.loading = false;
