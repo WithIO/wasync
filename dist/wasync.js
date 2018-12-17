@@ -290,11 +290,11 @@ function Debounce() {
     }
 
     prom.then(function () {
-      if (self.next === stack && success) {
+      if (success) {
         success.apply(this_, arguments);
       }
     }).catch(function () {
-      if (self.next === stack && failure) {
+      if (failure) {
         failure.apply(this_, arguments);
       }
     }).finally(function () {
