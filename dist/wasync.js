@@ -112,6 +112,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.Debounce = Debounce;
 exports.ObjectDebounce = ObjectDebounce;
 var DEFAULT_WAIT = 300;
+var DEFAULT_WAIT_BETWEEN = 0;
 var DEFAULT_PROP = '$wasyncDebounce';
 var INACTIVE = 1;
 var WAITING = 2;
@@ -124,18 +125,21 @@ var RUNNING = 3;
  * See the README
  *
  * @param wait {number} Milliseconds to wait before running
+ * @param waitBetween {number} Milliseconds to wait between two consecutive
+ *                             runs
  * @constructor
  */
 
 function Debounce() {
   var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
       _ref$wait = _ref.wait,
-      wait = _ref$wait === void 0 ? DEFAULT_WAIT : _ref$wait;
+      wait = _ref$wait === void 0 ? DEFAULT_WAIT : _ref$wait,
+      _ref$waitBetween = _ref.waitBetween,
+      waitBetween = _ref$waitBetween === void 0 ? DEFAULT_WAIT_BETWEEN : _ref$waitBetween;
 
   var self = this;
   self.state = INACTIVE;
   self.next = undefined;
-  self.timeout = null;
   /**
    * Generates an asynchronously debounced function
    *
@@ -198,7 +202,7 @@ function Debounce() {
 
       self.next = stack;
 
-      if (self.state !== RUNNING) {
+      if (self.state === INACTIVE) {
         self.wait();
       }
     };
@@ -245,7 +249,7 @@ function Debounce() {
   };
   /**
    * Go into waiting state and call the run function after the given amount
-   * of time. If a timeout was already running, cancel it.
+   * of time. Expects to be called from the "INACTIVE" state.
    *
    * @private
    */
@@ -253,8 +257,7 @@ function Debounce() {
 
   self.wait = function () {
     self.state = WAITING;
-    clearTimeout(self.timeout);
-    self.timeout = setTimeout(function () {
+    setTimeout(function () {
       self.run();
     }, wait);
   };
@@ -309,7 +312,7 @@ function Debounce() {
       } else {
         setTimeout(function () {
           return self.run();
-        }, 0);
+        }, waitBetween);
       }
     });
   };
@@ -326,6 +329,8 @@ function Debounce() {
  * as a property to "this" so it can be retrieved by further calls.
  *
  * @param wait {number} Milliseconds to wait before running
+ * @param waitBetween {number} Milliseconds to wait between two consecutive
+ *                             runs
  * @param prop {string} Name of the property to store the Debounce instance
  *                      into
  * @constructor
@@ -336,6 +341,8 @@ function ObjectDebounce() {
   var _ref5 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
       _ref5$wait = _ref5.wait,
       wait = _ref5$wait === void 0 ? DEFAULT_WAIT : _ref5$wait,
+      _ref5$waitBetween = _ref5.waitBetween,
+      waitBetween = _ref5$waitBetween === void 0 ? DEFAULT_WAIT_BETWEEN : _ref5$waitBetween,
       _ref5$prop = _ref5.prop,
       prop = _ref5$prop === void 0 ? DEFAULT_PROP : _ref5$prop;
 
@@ -363,7 +370,8 @@ function ObjectDebounce() {
     return function () {
       if (!this[prop]) {
         this[prop] = new Debounce({
-          wait: wait
+          wait: wait,
+          waitBetween: waitBetween
         });
       }
 
