@@ -37,7 +37,7 @@ import {ObjectDebounce} from "../src";
 
 function doTheSearch({search}) {
     return new Promise((resolve) => {
-        setTimeout(() => resolve(`You searched ${search}`), 1000);
+        setTimeout(() => resolve(`You searched "${search}"`), 1000);
     });
 }
 
