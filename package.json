@@ -1,6 +1,6 @@
 {
   "name": "wasync",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Async utils and patterns for JavaScript",
   "main": "dist/wasync.js",
   "scripts": {
